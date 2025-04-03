@@ -128,6 +128,48 @@ def post_restaurant():
     restaurants.insert_one(data)
     return jsonify({"message": "Restaurant added successfully!"}), 201
 
+@app.route("/auth/register", methods=["POST"])
+def register_user():
+    """
+    Register a new user account
+    ---
+    tags:
+      - Auth
+    consumes:
+      - application/json
+    parameters:
+      - in: body
+        name: user
+        required: true
+        schema:
+          type: object
+          required:
+            - email
+            - password
+            - first_name
+            - last_name
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+    responses:
+      201:
+        description: User created successfully
+      400:
+        description: Missing or duplicate fields
+    """
+    data = request.get_json()
+    if users.find_one({"email": data["email"]}):
+        return jsonify({"error": "User already exists"}), 400
+    users.insert_one(data)
+    return jsonify({"message": "User created successfully"}), 201
+
+
 @app.route("/auth/login", methods=["POST"])
 def admin_login():
     """
@@ -150,44 +192,41 @@ def admin_login():
         return jsonify({"message": "Login successful!", "token": token})
     return jsonify({"error": "Invalid credentials"}), 401
 
-@app.route("/reviews", methods=["POST"])
-def post_review():
+@app.route("/auth/login", methods=["POST"])
+def admin_login():
     """
-    Post a review for a restaurant
+    Login user and return JWT
     ---
     tags:
-      - Reviews
+      - Auth
+    consumes:
+      - application/json
     parameters:
-      - name: Authorization
-        in: header
-        type: string
+      - in: body
+        name: credentials
         required: true
-    requestBody:
-      required: true
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+            password:
+              type: string
     responses:
-      201:
-        description: Review posted successfully
+      200:
+        description: Login successful with JWT token
       401:
-        description: Login required
+        description: Invalid credentials
     """
-    auth_header = request.headers.get("Authorization")
-    token = auth_header.split(" ")[1] if auth_header and auth_header.startswith("Bearer ") else None
-    decoded = verify_token(token) if token else None
-    if not decoded:
-        return jsonify({"error": "Login required"}), 401
-
-    user = users.find_one({"_id": ObjectId(decoded["user_id"])})
     data = request.get_json()
-    full_name = f"{user.get('first_name', '')} {user.get('last_name', '')}".strip() or user.get("email", "").split("@")[0]
-    review = {
-        "user": full_name,
-        "restaurant_id": data["restaurant_id"],
-        "rating": data["rating"],
-        "comment": data["comment"],
-        "timestamp": datetime.datetime.utcnow()
-    }
-    reviews.insert_one(review)
-    return jsonify({"message": "Review posted successfully!"}), 201
+    user = users.find_one({"email": data["email"]})
+    if user and user["password"] == data["password"]:
+        token = generate_token(user["_id"], user.get("role", "user"))
+        return jsonify({"message": "Login successful!", "token": token})
+    return jsonify({"error": "Invalid credentials"}), 401
 
 @app.route("/bookmarks", methods=["POST"])
 def bookmark_restaurant():
@@ -196,18 +235,29 @@ def bookmark_restaurant():
     ---
     tags:
       - Bookmarks
+    consumes:
+      - application/json
     parameters:
       - name: Authorization
         in: header
         type: string
         required: true
-    requestBody:
-      required: true
+      - in: body
+        name: data
+        required: true
+        schema:
+          type: object
+          properties:
+            restaurant_id:
+              type: string
+              example: "restaurant123"
     responses:
       201:
         description: Restaurant bookmarked
       401:
         description: Login required
+      400:
+        description: restaurant_id is required
     """
     auth_header = request.headers.get("Authorization")
     token = auth_header.split(" ")[1] if auth_header and auth_header.startswith("Bearer ") else None
