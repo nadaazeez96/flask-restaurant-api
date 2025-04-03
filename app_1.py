@@ -117,6 +117,7 @@ def post_restaurant():
         schema:
           type: object
           required:
+            - _id
             - name
             - cuisine
             - type
@@ -126,6 +127,8 @@ def post_restaurant():
             - address
             - contact
           properties:
+            _id:
+              type: string
             name:
               type: string
             cuisine:
@@ -162,6 +165,31 @@ def post_restaurant():
     validate_restaurant(data)
     restaurants.insert_one(data)
     return jsonify({"message": "Restaurant added successfully!"}), 201
+
+@app.route("/restaurants/<restaurant_id>", methods=["DELETE"])
+def delete_restaurant(restaurant_id):
+    """
+    Delete a restaurant by ID
+    ---
+    tags:
+      - Restaurants
+    parameters:
+      - name: restaurant_id
+        in: path
+        type: string
+        required: true
+    responses:
+      200:
+        description: Restaurant deleted successfully
+      404:
+        description: Restaurant not found
+    """
+    result = restaurants.delete_one({"_id": restaurant_id})
+    if result.deleted_count:
+        return jsonify({"message": "Restaurant deleted successfully"}), 200
+    else:
+        return jsonify({"error": "Restaurant not found"}), 404
+
 
 @app.route("/auth/register", methods=["POST"])
 def register_user():
