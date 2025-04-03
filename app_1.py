@@ -169,29 +169,6 @@ def register_user():
     users.insert_one(data)
     return jsonify({"message": "User created successfully"}), 201
 
-
-@app.route("/auth/login", methods=["POST"])
-def admin_login():
-    """
-    Login user and return JWT
-    ---
-    tags:
-      - Auth
-    requestBody:
-      required: true
-    responses:
-      200:
-        description: Login successful with JWT token
-      401:
-        description: Invalid credentials
-    """
-    data = request.get_json()
-    user = users.find_one({"email": data["email"]})
-    if user and user["password"] == data["password"]:
-        token = generate_token(user["_id"], user.get("role", "user"))
-        return jsonify({"message": "Login successful!", "token": token})
-    return jsonify({"error": "Invalid credentials"}), 401
-
 @app.route("/auth/login", methods=["POST"])
 def admin_login():
     """
@@ -345,6 +322,61 @@ def delete_bookmark(restaurant_id):
         return jsonify({"message": "Bookmark removed."}), 200
     else:
         return jsonify({"error": "Bookmark not found"}), 404
+
+@app.route("/reviews", methods=["POST"])
+def post_review():
+    """
+    Post a review for a restaurant
+    ---
+    tags:
+      - Reviews
+    consumes:
+      - application/json
+    parameters:
+      - name: Authorization
+        in: header
+        type: string
+        required: true
+      - in: body
+        name: review
+        required: true
+        schema:
+          type: object
+          required:
+            - restaurant_id
+            - rating
+            - comment
+          properties:
+            restaurant_id:
+              type: string
+            rating:
+              type: number
+            comment:
+              type: string
+    responses:
+      201:
+        description: Review posted successfully
+      401:
+        description: Login required
+    """
+    auth_header = request.headers.get("Authorization")
+    token = auth_header.split(" ")[1] if auth_header and auth_header.startswith("Bearer ") else None
+    decoded = verify_token(token) if token else None
+    if not decoded:
+        return jsonify({"error": "Login required"}), 401
+
+    user = users.find_one({"_id": ObjectId(decoded["user_id"])})
+    data = request.get_json()
+    full_name = f"{user.get('first_name', '')} {user.get('last_name', '')}".strip() or user.get("email", "").split("@")[0]
+    review = {
+        "user": full_name,
+        "restaurant_id": data["restaurant_id"],
+        "rating": data["rating"],
+        "comment": data["comment"],
+        "timestamp": datetime.datetime.utcnow()
+    }
+    reviews.insert_one(review)
+    return jsonify({"message": "Review posted successfully!"}), 201
     
 @app.route("/restaurants/cuisine/<cuisine>", methods=["GET"])
 def get_by_cuisine(cuisine):
