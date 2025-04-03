@@ -169,11 +169,15 @@ def post_restaurant():
 @app.route("/restaurants/<restaurant_id>", methods=["DELETE"])
 def delete_restaurant(restaurant_id):
     """
-    Delete a restaurant by ID
+    Delete a restaurant by ID (admin only)
     ---
     tags:
       - Restaurants
     parameters:
+      - name: Authorization
+        in: header
+        type: string
+        required: true
       - name: restaurant_id
         in: path
         type: string
@@ -181,15 +185,22 @@ def delete_restaurant(restaurant_id):
     responses:
       200:
         description: Restaurant deleted successfully
+      403:
+        description: Admin access required
       404:
         description: Restaurant not found
     """
+    auth_header = request.headers.get("Authorization")
+    token = auth_header.split(" ")[1] if auth_header and auth_header.startswith("Bearer ") else None
+    decoded = verify_token(token) if token else None
+    if not decoded or decoded.get("role") != "admin":
+        return jsonify({"error": "Admin access required"}), 403
+
     result = restaurants.delete_one({"_id": restaurant_id})
-    if result.deleted_count:
-        return jsonify({"message": "Restaurant deleted successfully"}), 200
-    else:
+    if result.deleted_count == 0:
         return jsonify({"error": "Restaurant not found"}), 404
 
+    return jsonify({"message": "Restaurant deleted successfully."}), 200
 
 @app.route("/auth/register", methods=["POST"])
 def register_user():
