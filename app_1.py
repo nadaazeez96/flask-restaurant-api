@@ -104,13 +104,48 @@ def post_restaurant():
     ---
     tags:
       - Restaurants
+    consumes:
+      - application/json
     parameters:
       - name: Authorization
         in: header
         type: string
         required: true
-    requestBody:
-      required: true
+      - in: body
+        name: restaurant
+        required: true
+        schema:
+          type: object
+          required:
+            - name
+            - cuisine
+            - type
+            - dietary
+            - rating
+            - location
+            - address
+            - contact
+          properties:
+            name:
+              type: string
+            cuisine:
+              type: array
+              items:
+                type: string
+            type:
+              type: string
+            dietary:
+              type: array
+              items:
+                type: string
+            rating:
+              type: number
+            location:
+              type: string
+            address:
+              type: string
+            contact:
+              type: string
     responses:
       201:
         description: Restaurant added successfully
