@@ -295,6 +295,100 @@ def delete_bookmark(restaurant_id):
         return jsonify({"message": "Bookmark removed."}), 200
     else:
         return jsonify({"error": "Bookmark not found"}), 404
+    
+@app.route("/restaurants/cuisine/<cuisine>", methods=["GET"])
+def get_by_cuisine(cuisine):
+    """
+    Search restaurants by cuisine
+    ---
+    tags:
+      - Restaurants
+    parameters:
+      - name: cuisine
+        in: path
+        type: string
+        required: true
+        description: Cuisine type (e.g., Indian, Chinese)
+    responses:
+      200:
+        description: List of matching restaurants
+    """
+    results = list(restaurants.find({"cuisine": {"$regex": cuisine, "$options": "i"}}, {"_id": 0}))
+    return jsonify(results)
+
+@app.route("/restaurants/diet/<diet>", methods=["GET"])
+def get_by_diet(diet):
+    """
+    Search restaurants by dietary preference
+    ---
+    tags:
+      - Restaurants
+    parameters:
+      - name: diet
+        in: path
+        type: string
+        required: true
+        description: Dietary type (e.g., Vegan, Halal)
+    responses:
+      200:
+        description: List of matching restaurants
+    """
+    results = list(restaurants.find({"dietary": {"$regex": diet, "$options": "i"}}, {"_id": 0}))
+    return jsonify(results)
+
+@app.route("/restaurants/location/<location>", methods=["GET"])
+def get_by_location(location):
+    """
+    Search restaurants by location
+    ---
+    tags:
+      - Restaurants
+    parameters:
+      - name: location
+        in: path
+        type: string
+        required: true
+        description: City or area
+    responses:
+      200:
+        description: List of matching restaurants
+    """
+    results = list(restaurants.find({"location": {"$regex": location, "$options": "i"}}, {"_id": 0}))
+    return jsonify(results)
+
+@app.route("/restaurants/filter", methods=["GET"])
+def filter_by_combination():
+    """
+    Search restaurants using multiple filters (cuisine, diet, location)
+    ---
+    tags:
+      - Restaurants
+    parameters:
+      - name: cuisine
+        in: query
+        type: string
+        required: false
+      - name: diet
+        in: query
+        type: string
+        required: false
+      - name: location
+        in: query
+        type: string
+        required: false
+    responses:
+      200:
+        description: List of matching restaurants
+    """
+    filters = {}
+    if cuisine := request.args.get("cuisine"):
+        filters["cuisine"] = {"$regex": cuisine, "$options": "i"}
+    if diet := request.args.get("diet"):
+        filters["dietary"] = {"$regex": diet, "$options": "i"}
+    if location := request.args.get("location"):
+        filters["location"] = {"$regex": location, "$options": "i"}
+    results = list(restaurants.find(filters, {"_id": 0}))
+    return jsonify(results)
 
 # --- Run ---
 if __name__ == "__main__":
