@@ -1,40 +1,11 @@
 venv/
-Module_4_continued.pdf
-Module_4_continued.docx
-
-# Python
 __pycache__/
 *.pyc
-
-# Env & secrets
 .env
 secretkey.py
-
-# Venv
-venv/
-
-# Mac system
 .DS_Store
-
-# Unnecessary files
-Module_4_continued.*
 playground-*.js
-
-
-# Ignore local dev/backup files
-*.docx
-*.pdf
 playground-*.mongodb.js
-secretkey.py
-
-# Ignore env and secrets
-.env
-secretkey.py
-
-# Ignore editor files, docs, and Mongo playground
+Module_4_continued.*
 *.docx
 *.pdf
-*.js
-__pycache__/
-
-echo -e ".env\nsecretkey.py\n*.pyc\n__pycache__/" > .gitignore
