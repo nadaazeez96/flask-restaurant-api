@@ -17,7 +17,7 @@ Swagger(app)
 
 # --- Connect to MongoDB Atlas ---
 try:
-    client = MongoClient(os.getenv("MONGO_URI"))
+    client = MongoClient(os.getenv("MONGO_URI")) 
     db = client["Restaurants_ALL"]
     restaurants = db["Restaurants"]
     users = db["users"]
