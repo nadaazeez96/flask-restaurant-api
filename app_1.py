@@ -53,6 +53,10 @@ def generate_token(user_id, role):
     return jwt.encode(payload, app.config['SECRET_KEY'], algorithm="HS256")
 
 # --- Routes ---
+@app.route('/')
+def home():
+    return jsonify({"message": "Welcome to the Flask Restaurant API!"})
+
 @app.route("/restaurants", methods=["GET"])
 def get_all_restaurants():
     """
