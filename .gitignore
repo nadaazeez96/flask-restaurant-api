@@ -36,3 +36,5 @@ secretkey.py
 *.pdf
 *.js
 __pycache__/
+
+echo -e ".env\nsecretkey.py\n*.pyc\n__pycache__/" > .gitignore
