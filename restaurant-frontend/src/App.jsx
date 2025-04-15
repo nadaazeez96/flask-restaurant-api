@@ -27,7 +27,8 @@ function App() {
   };
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", padding: "2rem" }}>
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "2rem", backgroundColor: "#f5e6d8", minHeight: "100vh" }}>
+
       {/* Hero Section with Background */}
       <div
         style={{
