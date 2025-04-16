@@ -28,30 +28,31 @@ function App() {
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "2rem", backgroundColor: "#f5e6d8", minHeight: "100vh" }}>
-
+      
       {/* Hero Section with Background */}
       <div
         style={{
           backgroundImage: "url('/header.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          padding: "5rem 2rem",
           borderRadius: "12px",
           color: "white",
           textAlign: "center",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
           marginBottom: "2rem",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            padding: "3rem 2rem",
+            background: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6))",
+            backdropFilter: "blur(3px)",
+            padding: "4rem 2rem",
             borderRadius: "12px",
           }}
         >
-          <h1 style={{ fontSize: "2.8rem", marginBottom: "1rem" }}>Local Bites</h1>
-          <p style={{ fontSize: "1.2rem", marginBottom: "2rem" }}>
+          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>Local Bites</h1>
+          <p style={{ fontSize: "1.1rem", marginBottom: "2rem" }}>
             Find Your Next Bite 🍴
           </p>
 
@@ -74,7 +75,7 @@ function App() {
               placeholder="Try: vegan, halal, gluten-free"
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
-                padding: "0.75rem 1rem",
+                padding: "0.6rem 1rem",
                 width: "60%",
                 maxWidth: "400px",
                 border: "none",
@@ -85,7 +86,7 @@ function App() {
             <button
               type="submit"
               style={{
-                padding: "0.75rem 1.5rem",
+                padding: "0.6rem 1.2rem",
                 backgroundColor: "#4caf50",
                 color: "white",
                 border: "none",
@@ -100,52 +101,52 @@ function App() {
         </div>
       </div>
 
-      {/* How It Works Section */}
-<div
-  style={{
-    backgroundColor: "#fff",
-    padding: "3rem 2rem",
-    borderRadius: "12px",
-    maxWidth: "900px",
-    margin: "0 auto 2rem auto",
-    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)",
-    textAlign: "center",
-  }}
->
-  <h2 style={{ fontSize: "2rem", color: "#2e7d32", marginBottom: "2rem" }}>
-    How It Works
-  </h2>
-  <div
-    style={{
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      gap: "2rem",
-    }}
-  >
-    <div style={{ maxWidth: "250px" }}>
-      <div style={{ fontSize: "2rem" }}>🔍</div>
-      <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>Choose a Diet</h3>
-      <p style={{ color: "#555" }}>
-        Select from vegan, halal, gluten-free, or other dietary preferences.
-      </p>
-    </div>
-    <div style={{ maxWidth: "250px" }}>
-      <div style={{ fontSize: "2rem" }}>📍</div>
-      <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>Find Local Spots</h3>
-      <p style={{ color: "#555" }}>
-        Get matched with nearby restaurants that serve your dietary needs.
-      </p>
-    </div>
-    <div style={{ maxWidth: "250px" }}>
-      <div style={{ fontSize: "2rem" }}>🍽️</div>
-      <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>Enjoy Your Meal</h3>
-      <p style={{ color: "#555" }}>
-        Dine with confidence knowing your preferences are respected.
-      </p>
-    </div>
-  </div>
-</div>
+      {/* How It Works Section – Compact */}
+      <div
+        style={{
+          backgroundColor: "#fff",
+          padding: "2rem 1.5rem",
+          borderRadius: "10px",
+          maxWidth: "800px",
+          margin: "0 auto 2rem auto",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+          textAlign: "center",
+        }}
+      >
+        <h2 style={{ fontSize: "1.6rem", color: "#2e7d32", marginBottom: "1.5rem" }}>
+          How It Works
+        </h2>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "1.5rem",
+          }}
+        >
+          <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
+            <div style={{ fontSize: "1.5rem" }}>🔍</div>
+            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Choose a Diet</h3>
+            <p style={{ color: "#555" }}>
+              Select from vegan, halal, gluten-free, or other preferences.
+            </p>
+          </div>
+          <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
+            <div style={{ fontSize: "1.5rem" }}>📍</div>
+            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Find Local Spots</h3>
+            <p style={{ color: "#555" }}>
+              See nearby restaurants that match your needs.
+            </p>
+          </div>
+          <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
+            <div style={{ fontSize: "1.5rem" }}>🍽️</div>
+            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Enjoy Your Meal</h3>
+            <p style={{ color: "#555" }}>
+              Eat confidently knowing your preferences are respected.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Results Section */}
       {loading && <p style={{ textAlign: "center" }}>Loading...</p>}
