@@ -100,6 +100,53 @@ function App() {
         </div>
       </div>
 
+      {/* How It Works Section */}
+<div
+  style={{
+    backgroundColor: "#fff",
+    padding: "3rem 2rem",
+    borderRadius: "12px",
+    maxWidth: "900px",
+    margin: "0 auto 2rem auto",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)",
+    textAlign: "center",
+  }}
+>
+  <h2 style={{ fontSize: "2rem", color: "#2e7d32", marginBottom: "2rem" }}>
+    How It Works
+  </h2>
+  <div
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      gap: "2rem",
+    }}
+  >
+    <div style={{ maxWidth: "250px" }}>
+      <div style={{ fontSize: "2rem" }}>🔍</div>
+      <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>Choose a Diet</h3>
+      <p style={{ color: "#555" }}>
+        Select from vegan, halal, gluten-free, or other dietary preferences.
+      </p>
+    </div>
+    <div style={{ maxWidth: "250px" }}>
+      <div style={{ fontSize: "2rem" }}>📍</div>
+      <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>Find Local Spots</h3>
+      <p style={{ color: "#555" }}>
+        Get matched with nearby restaurants that serve your dietary needs.
+      </p>
+    </div>
+    <div style={{ maxWidth: "250px" }}>
+      <div style={{ fontSize: "2rem" }}>🍽️</div>
+      <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>Enjoy Your Meal</h3>
+      <p style={{ color: "#555" }}>
+        Dine with confidence knowing your preferences are respected.
+      </p>
+    </div>
+  </div>
+</div>
+
       {/* Results Section */}
       {loading && <p style={{ textAlign: "center" }}>Loading...</p>}
       {error && <p style={{ textAlign: "center", color: "red" }}>{error}</p>}
