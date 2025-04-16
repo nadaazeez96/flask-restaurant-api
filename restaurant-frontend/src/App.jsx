@@ -9,22 +9,27 @@ function App() {
   const [showResults, setShowResults] = useState(false);
 
   const fetchRestaurants = (diet) => {
+    console.log("Fetching for diet:", diet); 
+  
     if (!diet.trim()) return;
-
+  
     setLoading(true);
     setError("");
     axios
       .get(`https://flask-restaurant-api.onrender.com/restaurants/diet/${diet}`)
       .then((res) => {
+        console.log("API Response:", res.data); 
         setRestaurants(res.data);
         setLoading(false);
         setShowResults(true);
       })
       .catch((err) => {
+        console.error("API Error:", err); 
         setError("Failed to load restaurants.");
         setLoading(false);
       });
   };
+  
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "2rem", backgroundColor: "#f5e6d8", minHeight: "100vh" }}>
