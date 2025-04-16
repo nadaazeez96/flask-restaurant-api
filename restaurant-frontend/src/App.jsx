@@ -27,32 +27,33 @@ function App() {
   };
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", padding: "2rem", backgroundColor: "#f5e6d8", minHeight: "100vh" }}>
-      
-      {/* Hero Section with Background */}
+    <div style={{ fontFamily: "Arial, sans-serif", backgroundColor: "#ffffff", minHeight: "100vh" }}>
+
+      {/* Hero Section with Background Image and Logo */}
       <div
         style={{
           backgroundImage: "url('/header.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          borderRadius: "12px",
-          color: "white",
-          textAlign: "center",
-          marginBottom: "2rem",
+          height: "60vh",
           position: "relative",
-          overflow: "hidden",
+          borderRadius: "12px",
+          marginBottom: "2rem",
         }}
       >
         <div
           style={{
-            background: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6))",
-            backdropFilter: "blur(3px)",
-            padding: "4rem 2rem",
-            borderRadius: "12px",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
+            color: "white",
+            textShadow: "1px 1px 4px rgba(0,0,0,0.6)",
           }}
         >
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>Local Bites</h1>
-          <p style={{ fontSize: "1.1rem", marginBottom: "2rem" }}>
+          <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>Local Bites</h1>
+          <p style={{ fontSize: "1.2rem", marginBottom: "1.5rem" }}>
             Find Your Next Bite 🍴
           </p>
 
@@ -101,19 +102,16 @@ function App() {
         </div>
       </div>
 
-      {/* How It Works Section – Compact */}
+      {/* How It Works – Compact, Clean */}
       <div
         style={{
-          backgroundColor: "#fff",
-          padding: "2rem 1.5rem",
-          borderRadius: "10px",
-          maxWidth: "800px",
+          padding: "1.5rem 1rem",
+          maxWidth: "850px",
           margin: "0 auto 2rem auto",
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
           textAlign: "center",
         }}
       >
-        <h2 style={{ fontSize: "1.6rem", color: "#2e7d32", marginBottom: "1.5rem" }}>
+        <h2 style={{ fontSize: "1.4rem", color: "#2e7d32", marginBottom: "1.2rem" }}>
           How It Works
         </h2>
         <div
@@ -121,29 +119,20 @@ function App() {
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
-            gap: "1.5rem",
+            gap: "1rem",
           }}
         >
-          <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
-            <div style={{ fontSize: "1.5rem" }}>🔍</div>
-            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Choose a Diet</h3>
-            <p style={{ color: "#555" }}>
-              Select from vegan, halal, gluten-free, or other preferences.
-            </p>
+          <div style={{ maxWidth: "200px", fontSize: "0.9rem" }}>
+            <div style={{ fontSize: "1.3rem" }}>🔍</div>
+            <p><strong>Choose a diet</strong><br />Vegan, halal, gluten-free, and more.</p>
           </div>
-          <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
-            <div style={{ fontSize: "1.5rem" }}>📍</div>
-            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Find Local Spots</h3>
-            <p style={{ color: "#555" }}>
-              See nearby restaurants that match your needs.
-            </p>
+          <div style={{ maxWidth: "200px", fontSize: "0.9rem" }}>
+            <div style={{ fontSize: "1.3rem" }}>📍</div>
+            <p><strong>Find local spots</strong><br />Search based on your preferences.</p>
           </div>
-          <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
-            <div style={{ fontSize: "1.5rem" }}>🍽️</div>
-            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Enjoy Your Meal</h3>
-            <p style={{ color: "#555" }}>
-              Eat confidently knowing your preferences are respected.
-            </p>
+          <div style={{ maxWidth: "200px", fontSize: "0.9rem" }}>
+            <div style={{ fontSize: "1.3rem" }}>🍽️</div>
+            <p><strong>Enjoy your meal</strong><br />Dine with confidence and ease.</p>
           </div>
         </div>
       </div>
@@ -158,6 +147,7 @@ function App() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "1.5rem",
+            padding: "1rem",
           }}
         >
           {restaurants.map((rest, index) => (
