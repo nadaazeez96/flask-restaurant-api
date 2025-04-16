@@ -30,82 +30,85 @@ function App() {
     <div style={{ fontFamily: "Arial, sans-serif", backgroundColor: "#ffffff", minHeight: "100vh" }}>
 
       {/* Hero Section with Background Image and Logo */}
-      <div
+      {/* Hero Section with Visible Image and Blur Box */}
+<div
+  style={{
+    backgroundImage: "url('/header.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: "60vh",
+    position: "relative",
+    borderRadius: "12px",
+    marginBottom: "2rem",
+    overflow: "hidden",
+  }}
+>
+  {/* Rectangular blur box centered */}
+  <div
+    style={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      padding: "2rem 3rem",
+      backdropFilter: "blur(6px)",
+      backgroundColor: "rgba(0, 0, 0, 0.3)",
+      borderRadius: "12px",
+      textAlign: "center",
+      color: "white",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+    }}
+  >
+    <h1 style={{ fontSize: "2.8rem", marginBottom: "1rem" }}>Local Bites</h1>
+    <p style={{ fontSize: "1.2rem", marginBottom: "1.5rem" }}>
+      Find Your Next Bite 🍴
+    </p>
+
+    {/* Search Bar */}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        fetchRestaurants(searchQuery);
+      }}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "1rem",
+        flexWrap: "wrap",
+        marginTop: "1rem",
+      }}
+    >
+      <input
+        type="text"
+        value={searchQuery}
+        placeholder="Try: vegan, halal, gluten-free"
+        onChange={(e) => setSearchQuery(e.target.value)}
         style={{
-          backgroundImage: "url('/header.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-          position: "relative",
-          borderRadius: "12px",
-          marginBottom: "2rem",
+          padding: "0.6rem 1rem",
+          width: "60%",
+          maxWidth: "400px",
+          border: "none",
+          borderRadius: "6px",
+          fontSize: "1rem",
         }}
-      >
-    <div
+      />
+      <button
+        type="submit"
         style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center",
+          padding: "0.6rem 1.2rem",
+          backgroundColor: "#4caf50",
           color: "white",
-          padding: "2rem",
-          borderRadius: "12px",
-          backdropFilter: "blur(4px)", // subtle blur only behind text
-          backgroundColor: "rgba(0, 0, 0, 0.25)", // light tint
-          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+          border: "none",
+          borderRadius: "6px",
+          cursor: "pointer",
+          fontSize: "1rem",
         }}
       >
-
-          <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>Local Bites</h1>
-          <p style={{ fontSize: "1.2rem", marginBottom: "1.5rem" }}>
-            Find Your Next Bite 🍴
-          </p>
-
-          {/* Search Bar */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              fetchRestaurants(searchQuery);
-            }}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "1rem",
-              flexWrap: "wrap",
-            }}
-          >
-            <input
-              type="text"
-              value={searchQuery}
-              placeholder="Try: vegan, halal, gluten-free"
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                padding: "0.6rem 1rem",
-                width: "60%",
-                maxWidth: "400px",
-                border: "none",
-                borderRadius: "6px",
-                fontSize: "1rem",
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: "0.6rem 1.2rem",
-                backgroundColor: "#4caf50",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontSize: "1rem",
-              }}
-            >
-              🔍 Search
-            </button>
-          </form>
-        </div>
-      </div>
+        🔍 Search
+      </button>
+    </form>
+  </div>
+</div>
 
       {/* How It Works – Compact, Clean */}
       <div
