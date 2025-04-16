@@ -41,17 +41,22 @@ function App() {
           marginBottom: "2rem",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            textAlign: "center",
-            color: "white",
-            textShadow: "1px 1px 4px rgba(0,0,0,0.6)",
-          }}
-        >
+    <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          color: "white",
+          padding: "2rem",
+          borderRadius: "12px",
+          backdropFilter: "blur(4px)", // subtle blur only behind text
+          backgroundColor: "rgba(0, 0, 0, 0.25)", // light tint
+          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+        }}
+      >
+
           <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>Local Bites</h1>
           <p style={{ fontSize: "1.2rem", marginBottom: "1.5rem" }}>
             Find Your Next Bite 🍴
