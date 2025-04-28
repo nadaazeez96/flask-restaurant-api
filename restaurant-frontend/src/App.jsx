@@ -5,31 +5,36 @@ function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [dietQuery, setDietQuery] = useState("");
+  const [cuisineQuery, setCuisineQuery] = useState("");
+  const [locationQuery, setLocationQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
 
-  const fetchRestaurants = (diet) => {
-    console.log("Fetching for diet:", diet); 
-  
-    if (!diet.trim()) return;
-  
+  const fetchRestaurants = () => {
+    console.log("Fetching for filters:", { dietQuery, cuisineQuery, locationQuery });
+
     setLoading(true);
     setError("");
+
+    let url = "https://flask-restaurant-api.onrender.com/restaurants/filter?";
+    if (dietQuery) url += `diet=${dietQuery}&`;
+    if (cuisineQuery) url += `cuisine=${cuisineQuery}&`;
+    if (locationQuery) url += `location=${locationQuery}`;
+
     axios
-      .get(`https://flask-restaurant-api.onrender.com/restaurants/diet/${diet}`)
+      .get(url)
       .then((res) => {
-        console.log("API Response:", res.data); 
+        console.log("API Response:", res.data);
         setRestaurants(res.data);
         setLoading(false);
         setShowResults(true);
       })
       .catch((err) => {
-        console.error("API Error:", err); 
+        console.error("API Error:", err);
         setError("Failed to load restaurants.");
         setLoading(false);
       });
   };
-  
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "2rem", backgroundColor: "#f5e6d8", minHeight: "100vh" }}>
@@ -61,11 +66,11 @@ function App() {
             Find Your Next Bite 🍴
           </p>
 
-          {/* Search Bar */}
+          {/* Search Form */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              fetchRestaurants(searchQuery);
+              fetchRestaurants();
             }}
             style={{
               display: "flex",
@@ -76,13 +81,38 @@ function App() {
           >
             <input
               type="text"
-              value={searchQuery}
-              placeholder="Try: vegan, halal, gluten-free"
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={dietQuery}
+              placeholder="Diet (e.g., Vegan, Halal)"
+              onChange={(e) => setDietQuery(e.target.value)}
               style={{
                 padding: "0.6rem 1rem",
-                width: "60%",
-                maxWidth: "400px",
+                width: "200px",
+                border: "none",
+                borderRadius: "6px",
+                fontSize: "1rem",
+              }}
+            />
+            <input
+              type="text"
+              value={cuisineQuery}
+              placeholder="Cuisine (e.g., Indian, Italian)"
+              onChange={(e) => setCuisineQuery(e.target.value)}
+              style={{
+                padding: "0.6rem 1rem",
+                width: "200px",
+                border: "none",
+                borderRadius: "6px",
+                fontSize: "1rem",
+              }}
+            />
+            <input
+              type="text"
+              value={locationQuery}
+              placeholder="Location (e.g., San Francisco)"
+              onChange={(e) => setLocationQuery(e.target.value)}
+              style={{
+                padding: "0.6rem 1rem",
+                width: "200px",
                 border: "none",
                 borderRadius: "6px",
                 fontSize: "1rem",
@@ -131,16 +161,16 @@ function App() {
         >
           <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
             <div style={{ fontSize: "1.5rem" }}>🔍</div>
-            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Choose a Diet</h3>
+            <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Choose Preferences</h3>
             <p style={{ color: "#555" }}>
-              Select from vegan, halal, gluten-free, or other preferences.
+              Select diet, cuisine, and location to match your needs.
             </p>
           </div>
           <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
             <div style={{ fontSize: "1.5rem" }}>📍</div>
             <h3 style={{ fontSize: "1rem", marginBottom: "0.4rem" }}>Find Local Spots</h3>
             <p style={{ color: "#555" }}>
-              See nearby restaurants that match your needs.
+              See nearby restaurants that fit your filters.
             </p>
           </div>
           <div style={{ maxWidth: "200px", fontSize: "0.95rem" }}>
@@ -176,7 +206,20 @@ function App() {
                 backgroundColor: "#fff",
               }}
             >
-              <h2 style={{ marginBottom: "0.5rem", color: "#2e7d32" }}>{rest.name}</h2>
+              <h2 style={{ marginBottom: "0.5rem", color: "#2e7d32" }}>
+                {rest.website || rest.google_maps_link ? (
+                  <a
+                    href={rest.website || rest.google_maps_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: "none", color: "#2e7d32" }}
+                  >
+                    {rest.name}
+                  </a>
+                ) : (
+                  rest.name
+                )}
+              </h2>
               <p><strong>📍 Address:</strong> {rest.address}</p>
               <p><strong>🥗 Dietary:</strong> {rest.dietary.join(", ")}</p>
               <p><strong>🍽 Cuisine:</strong> {rest.cuisine}</p>
