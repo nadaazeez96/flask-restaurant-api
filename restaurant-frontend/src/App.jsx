@@ -206,20 +206,23 @@ function App() {
                 backgroundColor: "#fff",
               }}
             >
-              <h2 style={{ marginBottom: "0.5rem", color: "#2e7d32" }}>
-                {rest.website || rest.google_maps_link ? (
-                  <a
-                    href={rest.website || rest.google_maps_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: "none", color: "#2e7d32" }}
-                  >
-                    {rest.name}
-                  </a>
-                ) : (
-                  rest.name
-                )}
+          <h2 style={{ marginBottom: "0.5rem", color: "#2e7d32" }}>
+                <a
+                  href={
+                    rest.website
+                      ? rest.website
+                      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                          rest.name + " " + rest.location
+                        )}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", color: "#2e7d32" }}
+                >
+                  {rest.name}
+                </a>
               </h2>
+
               <p><strong>📍 Address:</strong> {rest.address}</p>
               <p><strong>🥗 Dietary:</strong> {rest.dietary.join(", ")}</p>
               <p><strong>🍽 Cuisine:</strong> {rest.cuisine}</p>
