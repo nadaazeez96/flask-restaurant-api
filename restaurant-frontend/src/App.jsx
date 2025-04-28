@@ -39,7 +39,7 @@ function App() {
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "2rem", backgroundColor: "#f5e6d8", minHeight: "100vh" }}>
       
-      {/* Hero Section with Background */}
+      {/* Hero Section */}
       <div
         style={{
           backgroundImage: "url('/header.jpg')",
@@ -136,7 +136,7 @@ function App() {
         </div>
       </div>
 
-      {/* How It Works Section – Compact */}
+      {/* How It Works Section */}
       <div
         style={{
           backgroundColor: "#fff",
@@ -204,9 +204,12 @@ function App() {
                 padding: "1.5rem",
                 boxShadow: "0 4px 8px rgba(0,0,0,0.05)",
                 backgroundColor: "#fff",
+                transition: "transform 0.2s",
               }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
-          <h2 style={{ marginBottom: "0.5rem", color: "#2e7d32" }}>
+              <h2 style={{ marginBottom: "0.5rem", color: "#2e7d32" }}>
                 <a
                   href={
                     rest.website
@@ -217,7 +220,13 @@ function App() {
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ textDecoration: "none", color: "#2e7d32" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "#2e7d32",
+                    transition: "color 0.3s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#66bb6a")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "#2e7d32")}
                 >
                   {rest.name}
                 </a>
