@@ -56,7 +56,6 @@ function App() {
         <div
           style={{
             background: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6))",
-            backdropFilter: "blur(3px)",
             padding: "4rem 2rem",
             borderRadius: "12px",
           }}
